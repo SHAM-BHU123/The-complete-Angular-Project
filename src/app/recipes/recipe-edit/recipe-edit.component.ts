@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
 import { RecipeService } from '../recipe.service';
 import { group } from '@angular/animations';
@@ -34,36 +34,53 @@ export class RecipeEditComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.recipeForm);
+    if(this.editMode){
+      this .recipeService.updateRecipe(this.)
+    }
   }
 
   onAddIngredient() {
     (this.recipeForm.get('ingredients') as FormArray).push(
       new FormGroup({
-        name: new FormControl(''),
-        amount: new FormControl(''),
+        name: new FormControl(null, Validators.required),
+        amount: new FormControl(null, [
+          Validators.required,
+          Validators.pattern(/^[1-9]+[0-9]*$/),
+        ]),
       })
     );
   }
 
   private initForm() {
     const recipe = this.recipeService.getRecipe(this.id);
-    let recipeIngredients: FormArray = new FormArray([]);
+    let recipeIngredients: FormArray = <any>new FormArray([]);
     if (this.editMode && recipe.ingredients) {
       for (let ingredient of recipe.ingredients) {
         recipeIngredients.push(
           new FormGroup({
-            name: new FormControl(ingredient.name),
-            amount: new FormControl(ingredient.amount),
+            name: new FormControl(ingredient.name, Validators.required),
+            amount: new FormControl(ingredient.amount, [
+              Validators.required,
+              Validators.pattern(/^[1-9]+[0-9]*$/),
+            ]),
           })
         );
       }
     }
 
     this.recipeForm = new FormGroup({
-      name: new FormControl(this.editMode ? recipe.name : ''),
-      imagePath: new FormControl(this.editMode ? recipe.imagePath : ''),
-      description: new FormControl(this.editMode ? recipe.description : ''),
+      name: new FormControl(
+        this.editMode ? recipe.name : '',
+        Validators.required
+      ),
+      imagePath: new FormControl(
+        this.editMode ? recipe.imagePath : '',
+        Validators.required
+      ),
+      description: new FormControl(
+        this.editMode ? recipe.description : '',
+        Validators.required
+      ),
       ingredients: recipeIngredients,
     });
   }
