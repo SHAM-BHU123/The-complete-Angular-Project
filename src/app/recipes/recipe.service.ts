@@ -21,6 +21,7 @@ export class RecipeService {
   //   ),
   // ];
   private recipes: Recipe[] = [];
+  Recipes: any;
   constructor(private slService: ShoppingListServices) {}
 
   setRecipes(recipes: Recipe[]) {
