@@ -11,7 +11,7 @@ export class AuthComponent implements OnInit {
   constructor(private authService: AuthService) {}
   isLoginMode: boolean = true;
   isLoading: boolean = false;
-  error = '';
+  error: string = '';
   onSwitchMode() {
     this.isLoginMode = !this.isLoginMode;
     console.log(this.isLoginMode);
