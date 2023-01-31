@@ -12,6 +12,7 @@ export class AuthComponent implements OnInit {
   isLoginMode: boolean = true;
   isLoading: boolean = false;
   error: string = '';
+
   onSwitchMode() {
     this.isLoginMode = !this.isLoginMode;
     console.log(this.isLoginMode);
@@ -30,12 +31,18 @@ export class AuthComponent implements OnInit {
           console.log(resData);
           this.isLoading = false;
         },
-        (error) => {
-          this.error = 'An error occured';
+        (errorRes) => {
+          console.log(errorRes);
+
+          switch (errorRes.error.error.message) {
+            case 'EMAIL_EXISTS':
+              this.error = 'This email exist already';
+          }
           this.isLoading = false;
         }
       );
     }
+    console.log(form);
 
     form.reset();
   }
