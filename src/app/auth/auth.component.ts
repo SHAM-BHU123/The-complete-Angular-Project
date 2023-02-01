@@ -31,13 +31,10 @@ export class AuthComponent implements OnInit {
           console.log(resData);
           this.isLoading = false;
         },
-        (errorRes) => {
-          console.log(errorRes);
+        (errorMessage) => {
+          console.log(errorMessage);
+          this.error = errorMessage;
 
-          switch (errorRes.error.error.message) {
-            case 'EMAIL_EXISTS':
-              this.error = 'This email exist already';
-          }
           this.isLoading = false;
         }
       );
