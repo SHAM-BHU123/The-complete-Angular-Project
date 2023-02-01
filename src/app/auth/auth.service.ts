@@ -3,13 +3,14 @@ import { Injectable } from '@angular/core';
 import { EmailValidator } from '@angular/forms';
 import { catchError, throwError } from 'rxjs';
 
-interface AuthResponseData {
+export interface AuthResponseData {
   kind: string;
   idToken: string;
   email: string;
   refreshToken: string;
   expiresIn: string;
   localId: string;
+  registered?: boolean;
 }
 
 @Injectable({
@@ -17,6 +18,7 @@ interface AuthResponseData {
 })
 export class AuthService {
   constructor(private http: HttpClient) {}
+
   signup(email: string, password: string) {
     return this.http
       .post<AuthResponseData>(
@@ -36,5 +38,12 @@ export class AuthService {
           return throwError(errorMessage);
         })
       );
+  }
+
+  login<AuthResponseData>(email: string, password: string) {
+    return this.http.post(
+      'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBnxjpAt6xYjfMnMB5oigPR3zijUWcvEl0',
+      { email: email, password: password, returnSecureToken: true }
+    );
   }
 }
