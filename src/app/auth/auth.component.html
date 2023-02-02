@@ -5,6 +5,12 @@
     </div>
     <div *ngIf="isLoading" style="text-align: center">
       <app-loading-spinner></app-loading-spinner>
+      <p>
+        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Incidunt,
+        magni quo. In perspiciatis, nihil eum dolores libero, at ea ducimus nam
+        optio molestiae inventore corporis nostrum aliquid reprehenderit ipsa
+        officia!
+      </p>
     </div>
     <form #authForm="ngForm" (ngSubmit)="onSubmit(authForm)" *ngIf="!isLoading">
       <div class="form-group">
