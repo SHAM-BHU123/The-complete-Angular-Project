@@ -66,6 +66,7 @@ export class AuthService {
   ) {
     const expirationDate = new Date(new Date().getTime() + +expiesIn * 1000);
     const user = new User(email, userId, token, expirationDate);
+    this.user.next(user);
   }
 
   private handleError(errorRes: HttpErrorResponse) {
