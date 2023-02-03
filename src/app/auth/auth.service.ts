@@ -1,6 +1,5 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { EmailValidator } from '@angular/forms';
 import { Subject, catchError, tap, throwError } from 'rxjs';
 import { User } from './user.model';
 
@@ -68,6 +67,7 @@ export class AuthService {
     const expirationDate = new Date(new Date().getTime() + +expiesIn * 1000);
     const user = new User(email, userId, token, expirationDate);
   }
+
   private handleError(errorRes: HttpErrorResponse) {
     let errorMessage = 'An unknown error occured';
     if (!errorRes.error || !errorRes.error.error) {
