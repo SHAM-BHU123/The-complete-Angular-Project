@@ -22,6 +22,7 @@ export class AuthComponent implements OnInit {
     if (!form.valid) {
       return;
     }
+
     const email = form.value.email;
     const password = form.value.password;
     let authObs: Observable<AuthResponseData>;
@@ -36,17 +37,14 @@ export class AuthComponent implements OnInit {
 
     authObs.subscribe(
       (resData) => {
-        console.log(resData);
         this.isLoading = false;
       },
       (errorMessage) => {
-        console.log(errorMessage);
         this.error = errorMessage;
         this.isLoading = false;
       }
     );
-    console.log(form);
-
+    console.log(form.value);
     form.reset();
   }
 
