@@ -58,6 +58,9 @@ export class AuthService {
         })
       );
   }
+  logout() {
+    this.user.next(null);
+  }
 
   private handleAuthetication(
     email: string,
