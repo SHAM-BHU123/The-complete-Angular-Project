@@ -30,7 +30,7 @@ export class AuthService {
       )
       .pipe(
         catchError(this.handleError),
-        tap((resData) => {
+        tap((resData: AuthResponseData) => {
           this.handleAuthetication(
             resData.email,
             resData.localId,
@@ -41,15 +41,15 @@ export class AuthService {
       );
   }
 
-  login<AuthResponseData>(email: string, password: string) {
+  login(email: string, password: string) {
     return this.http
-      .post(
-        'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBnxjpAt6xYjfMnMB5oigPR3zijUWcvEl0',
+      .post<AuthResponseData>(
+        'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBnxjpAt6xYjfMnMB5oigPR3zijUWcvEl0',
         { email: email, password: password, returnSecureToken: true }
       )
       .pipe(
         catchError(this.handleError),
-        tap((resData: any) => {
+        tap((resData: AuthResponseData) => {
           this.handleAuthetication(
             resData.email,
             resData.localId,
@@ -59,6 +59,7 @@ export class AuthService {
         })
       );
   }
+
   logout() {
     this.user.next(null);
     this.router.navigate(['/auth']);
@@ -68,9 +69,9 @@ export class AuthService {
     email: string,
     userId: string,
     token: string,
-    expiesIn: number
+    expiresIn: number
   ) {
-    const expirationDate = new Date(new Date().getTime() + +expiesIn * 1000);
+    const expirationDate = new Date(new Date().getTime() + +expiresIn * 1000);
     const user = new User(email, userId, token, expirationDate);
     this.user.next(user);
   }
@@ -78,6 +79,7 @@ export class AuthService {
   private handleError(errorRes: HttpErrorResponse) {
     let errorMessage = 'An unknown error occured';
     if (!errorRes.error || !errorRes.error.error) {
+      /* network problem or all other problem that doesn't throw an error message */
       return throwError(() => new Error(errorMessage));
     }
     switch (errorRes.error.error.message) {
@@ -86,7 +88,7 @@ export class AuthService {
         break;
 
       case 'EMAIL_NOT_FOUND':
-        errorMessage = 'This email doesnot exit.';
+        errorMessage = 'This email does not exits.';
         break;
 
       case 'INVALID_PASSWORD':

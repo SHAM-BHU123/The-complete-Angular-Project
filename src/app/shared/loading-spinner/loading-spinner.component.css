@@ -6,7 +6,7 @@
   --c4: #554236;
   /**/
 
-  width: 100px; /* control the size */
+  width: 50px; /* control the size */
   aspect-ratio: 8/5;
   --_g: no-repeat radial-gradient(#000 68%, #0000 71%);
   -webkit-mask: var(--_g), var(--_g), var(--_g);
