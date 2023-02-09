@@ -2,7 +2,7 @@ import { Subject } from 'rxjs';
 import { Ingredient } from '../shared/ingredient.model';
 import { ShoppingListServices } from '../shopping-list/shopping-list.service';
 import { Recipe } from './recipe.model';
-import { EventEmitter, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 @Injectable()
 export class RecipeService {
   recipeChanged = new Subject<Recipe[]>();

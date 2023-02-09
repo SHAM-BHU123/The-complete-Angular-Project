@@ -25,6 +25,7 @@ export class DataStorageService {
         console.log(response);
       });
   }
+
   fetchRecipes() {
     return this.http
       .get<Recipe[]>(
