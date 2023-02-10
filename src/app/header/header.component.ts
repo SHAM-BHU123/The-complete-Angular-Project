@@ -7,12 +7,14 @@ import { AuthService } from '../auth/auth.service';
   templateUrl: 'header.component.html',
 })
 export class HeaderComponent {
+  
   constructor(
     private dataStorageService: DataStorageService,
     private authSerive: AuthService
   ) {}
 
   onSaveData() {
+    
     this.dataStorageService.storeRecipes();
   }
 
