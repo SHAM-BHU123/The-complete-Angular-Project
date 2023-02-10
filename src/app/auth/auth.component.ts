@@ -49,4 +49,8 @@ export class AuthComponent implements OnInit {
   }
 
   ngOnInit(): void {}
+
+  onHandleError() {
+    this.error = null;
+  }
 }
