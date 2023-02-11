@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AuthResponseData, AuthService } from './auth.service';
 import { Observable } from 'rxjs';
+import { AlertComponent } from '../shared/alert/alert.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-auth',
@@ -9,7 +11,11 @@ import { Observable } from 'rxjs';
   styleUrls: ['./auth.component.css'],
 })
 export class AuthComponent implements OnInit {
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private viewContainerRef: ViewContainerRef
+  ) {}
   isLoginMode: boolean = true;
   isLoading: boolean = false;
   error: string = null;
@@ -38,9 +44,11 @@ export class AuthComponent implements OnInit {
     authObs.subscribe(
       (resData) => {
         this.isLoading = false;
+        this.router.navigate(['/recipes']);
       },
       (errorMessage) => {
         this.error = errorMessage;
+        this.ShowErrorAlert(errorMessage);
         this.isLoading = false;
       }
     );
@@ -53,4 +61,6 @@ export class AuthComponent implements OnInit {
   onHandleError() {
     this.error = null;
   }
+
+  private ShowErrorAlert(message: String) {}
 }
